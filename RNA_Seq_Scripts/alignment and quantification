@@ -21,6 +21,7 @@ conda activate rsem_env
 module load bowtie2
 module load samtools
 
+# can replace this from the other code file where i have already specified the paths (check if they are the same)
 
 rsem-calculate-expression \
   --paired-end \
