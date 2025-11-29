@@ -1,5 +1,9 @@
 for alignment and quantification i think this works i was able to get the correct BAM and other files
 
+activate the rsem conda enviroment or wont work i think
+
+open slurm
+
 #!/bin/bash
 		#SBATCH --job-name= your output file name
 		#SBATCH --partition=msc_appbio
@@ -7,6 +11,8 @@ for alignment and quantification i think this works i was able to get the correc
 		#SBATCH --ntasks=4
 		#SBATCH --time=02:00:00
 		#SBATCH --output=name of your output file_%j.out
+
+#first make sure you have the modules 
 
 
 conda activate rsem_env
