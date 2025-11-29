@@ -1,6 +1,6 @@
 for alignment and quantification i think this works i was able to get the correct BAM and other files
 
-activate the rsem conda enviroment or wont work i think
+activate the rsem conda enviroment or wont work i think (idk cant remember)
 
 open slurm
 
