@@ -1,8 +1,9 @@
 for alignment and quantification i think this works i was able to get the correct BAM and other files
 
-activate the rsem conda enviroment or wont work i think (idk cant remember)
+activate the rsem conda enviroment before submiting the slurm or doesnt work 
 
-open slurm
+#open slurm
+nano whatever_name 
 
 #!/bin/bash
 		#SBATCH --job-name= your output file name
@@ -12,8 +13,9 @@ open slurm
 		#SBATCH --time=02:00:00
 		#SBATCH --output=name of your output file_%j.out
 
-#first make sure you have the modules with module avail function
+#first make sure you have the modules with module avail function outside of slurm
 
+# load
 
 conda activate rsem_env
 module load bowtie2
