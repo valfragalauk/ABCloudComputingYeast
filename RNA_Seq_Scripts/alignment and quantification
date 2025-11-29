@@ -1,0 +1,24 @@
+for alignment and quantification i think this works i was able to get the correct BAM and other files
+
+#!/bin/bash
+		#SBATCH --job-name= your output file name
+		#SBATCH --partition=msc_appbio
+		#SBATCH --nodes=1
+		#SBATCH --ntasks=4
+		#SBATCH --time=02:00:00
+		#SBATCH --output=name of your output file_%j.out
+
+
+conda activate rsem_env
+module load bowtie2
+module load samtools
+
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/rest of the path/name_1.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/rest of the path/name_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem_fixed \
+  name for the output file
