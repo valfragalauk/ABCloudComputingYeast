@@ -1,3 +1,5 @@
+raw RNA sequencing files from NCBI 
+
 SRR7059707
 SRR7059706
 SRR7059709
