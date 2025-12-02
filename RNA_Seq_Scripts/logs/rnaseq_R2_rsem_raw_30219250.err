@@ -1,0 +1,4 @@
+sh: 1: samtools: not found
+(ERR): bowtie2-align exited with value 141
+sh: 1: samtools: not found
+(ERR): bowtie2-align exited with value 141

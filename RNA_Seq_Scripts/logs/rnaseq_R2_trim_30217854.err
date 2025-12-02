@@ -1,0 +1,82 @@
+Read1 before filtering:
+total reads: 17852375
+total bases: 2677856250
+Q20 bases: 2635464039(98.4169%)
+Q30 bases: 2559806874(95.5916%)
+
+Read2 before filtering:
+total reads: 17852375
+total bases: 2677856250
+Q20 bases: 2567412323(95.8757%)
+Q30 bases: 2426414315(90.6103%)
+
+Read1 after filtering:
+total reads: 17555831
+total bases: 2629397874
+Q20 bases: 2593621248(98.6394%)
+Q30 bases: 2525155275(96.0355%)
+
+Read2 aftering filtering:
+total reads: 17555831
+total bases: 2629397874
+Q20 bases: 2541536281(96.6585%)
+Q30 bases: 2412408923(91.7476%)
+
+Filtering result:
+reads passed filter: 35111662
+reads failed due to low quality: 577544
+reads failed due to too many N: 15544
+reads failed due to too short: 0
+reads with adapter trimmed: 264418
+bases trimmed due to adapters: 7974912
+
+Duplication rate: 17.8609%
+
+Insert size peak (evaluated by paired-end reads): 254
+
+JSON report: logs/SRR7059705_fastp.json
+HTML report: logs/SRR7059705_fastp.html
+
+fastp -i raw_fastq/SRR7059705_1.fastq.gz -I raw_fastq/SRR7059705_2.fastq.gz -o trimmed/SRR7059705_trimmed_1.fastq.gz -O trimmed/SRR7059705_trimmed_2.fastq.gz --thread 4 --html logs/SRR7059705_fastp.html --json logs/SRR7059705_fastp.json 
+fastp v0.20.0, time used: 324 seconds
+Read1 before filtering:
+total reads: 16846137
+total bases: 2526920550
+Q20 bases: 2487298067(98.432%)
+Q30 bases: 2416420130(95.6271%)
+
+Read2 before filtering:
+total reads: 16846137
+total bases: 2526920550
+Q20 bases: 2419551684(95.751%)
+Q30 bases: 2283213869(90.3556%)
+
+Read1 after filtering:
+total reads: 16556298
+total bases: 2479385149
+Q20 bases: 2446116338(98.6582%)
+Q30 bases: 2382221527(96.0811%)
+
+Read2 aftering filtering:
+total reads: 16556298
+total bases: 2479385149
+Q20 bases: 2394256329(96.5665%)
+Q30 bases: 2269542007(91.5365%)
+
+Filtering result:
+reads passed filter: 33112596
+reads failed due to low quality: 564996
+reads failed due to too many N: 14682
+reads failed due to too short: 0
+reads with adapter trimmed: 239258
+bases trimmed due to adapters: 8139156
+
+Duplication rate: 17.1329%
+
+Insert size peak (evaluated by paired-end reads): 253
+
+JSON report: logs/SRR7059706_fastp.json
+HTML report: logs/SRR7059706_fastp.html
+
+fastp -i raw_fastq/SRR7059706_1.fastq.gz -I raw_fastq/SRR7059706_2.fastq.gz -o trimmed/SRR7059706_trimmed_1.fastq.gz -O trimmed/SRR7059706_trimmed_2.fastq.gz --thread 4 --html logs/SRR7059706_fastp.html --json logs/SRR7059706_fastp.json 
+fastp v0.20.0, time used: 336 seconds

@@ -1,0 +1,8 @@
+Using RSEM reference: reference/yeast_rsem
+Running RSEM on RAW SRR7059705 (SY14 R2)...
+bowtie2 -q --phred33 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 -I 1 -X 1000 --no-mixed --no-discordant -p 4 -k 200 -x reference/yeast_rsem -1 raw_fastq/SRR7059705_1.fastq.gz -2 raw_fastq/SRR7059705_2.fastq.gz | samtools view -S -b -o rsem/SRR7059705_raw.temp/SRR7059705_raw.bam -
+"bowtie2 -q --phred33 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 -I 1 -X 1000 --no-mixed --no-discordant -p 4 -k 200 -x reference/yeast_rsem -1 raw_fastq/SRR7059705_1.fastq.gz -2 raw_fastq/SRR7059705_2.fastq.gz | samtools view -S -b -o rsem/SRR7059705_raw.temp/SRR7059705_raw.bam -" failed! Plase check if you provide correct parameters/options for the pipeline!
+Running RSEM on RAW SRR7059706 (BY4742 R2)...
+bowtie2 -q --phred33 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 -I 1 -X 1000 --no-mixed --no-discordant -p 4 -k 200 -x reference/yeast_rsem -1 raw_fastq/SRR7059706_1.fastq.gz -2 raw_fastq/SRR7059706_2.fastq.gz | samtools view -S -b -o rsem/SRR7059706_raw.temp/SRR7059706_raw.bam -
+"bowtie2 -q --phred33 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --score-min L,0,-0.1 -I 1 -X 1000 --no-mixed --no-discordant -p 4 -k 200 -x reference/yeast_rsem -1 raw_fastq/SRR7059706_1.fastq.gz -2 raw_fastq/SRR7059706_2.fastq.gz | samtools view -S -b -o rsem/SRR7059706_raw.temp/SRR7059706_raw.bam -" failed! Plase check if you provide correct parameters/options for the pipeline!
+RSEM on RAW reads completed.

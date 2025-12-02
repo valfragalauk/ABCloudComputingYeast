@@ -1,0 +1,10 @@
+Running FastQC on trimmed reads...
+application/gzip
+application/gzip
+application/gzip
+application/gzip
+Analysis complete for SRR7059706_trimmed_1.fastq.gz
+Analysis complete for SRR7059706_trimmed_2.fastq.gz
+Analysis complete for SRR7059705_trimmed_1.fastq.gz
+Analysis complete for SRR7059705_trimmed_2.fastq.gz
+FastQC on trimmed reads finished.
