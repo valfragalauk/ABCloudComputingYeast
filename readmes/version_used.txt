@@ -2,4 +2,5 @@ SRA Toolkit v3.2.1
 FastQC v0.12.1 
 Bowtie2 v2.5.1 
 RSEM v1.2.28 
+RSEM v1.3.1
 Samtools v1.17
