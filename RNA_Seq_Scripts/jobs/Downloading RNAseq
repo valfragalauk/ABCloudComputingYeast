@@ -37,55 +37,6 @@
 
 
 
-# downloading the reference genome using the GCF number provided in article
-
-
-	wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
-
-	 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.gtf.gz
-
-
-
-		# .fna is the FASTA sequence (S288C?)
-		# .gtf is the gene annotation file 
-
-	
-		Gunzip *.gz				# unzips both files
-
-
-# Building reference genome in directory where the genome files are
-
-	
-	 module load anaconda3
-	module avail conda
-
-	conda config --add channels defaults
-	conda config --add channels bioconda
-	conda config --add channels conda-forge
-
-	conda install RSEM
-
-     conda create -n rsem_env rsem 		# to create RSEM environment in conda 
-	conda activate rsem_env			# activates the enviorment
-	rsem-calculate-expression --version		# shows the version (1.3.1)
-
-	 module avail bowtie2
-	 module load bowtie2
-	 bowtie2 --version 					(# v2.5.1)
-
-
-	rsem-prepare-reference \
-  --bowtie2 \
-  --gtf GCF_000146045.2_R64_genomic.gtf \
-  GCF_000146045.2_R64_genomic.fna \
-  yeast_rsem_fixed
-
-
-   # --gff3: tells RSEM the annotation format
-   # --bowtie2: builds Bowtie2 index
-   # Output file: yeast_rsem    
-   #RSEM produces all necessary index files for alignment + quantification.
-
 # I used the below code but didn’t work try if you want or use the other file still trying to figure out how to do quantification + alignment 
 
 
