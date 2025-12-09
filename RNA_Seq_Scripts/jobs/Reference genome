@@ -25,3 +25,25 @@
 	conda config --add channels conda-forge
 
 	conda install RSEM
+
+
+     conda create -n rsem_env rsem 		# to create RSEM environment in conda 
+	conda activate rsem_env			# activates the enviorment
+	rsem-calculate-expression --version		# shows the version (1.3.1)
+
+	 module avail bowtie2
+	 module load bowtie2
+	 bowtie2 --version 					(# v2.5.1)
+
+
+	rsem-prepare-reference \
+  --bowtie2 \
+  --gtf GCF_000146045.2_R64_genomic.gtf \
+  GCF_000146045.2_R64_genomic.fna \
+  yeast_rsem_fixed
+
+
+   # --gff3: tells RSEM the annotation format
+   # --bowtie2: builds Bowtie2 index
+   # Output file: yeast_rsem    
+   #RSEM produces all necessary index files for alignment + quantification.
