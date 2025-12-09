@@ -1,0 +1,27 @@
+# downloading the reference genome using the GCF number provided in article
+
+
+	wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
+
+	 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.gtf.gz
+
+
+
+		# .fna is the FASTA sequence (S288C?)
+		# .gtf is the gene annotation file 
+
+	
+		Gunzip *.gz				# unzips both files
+
+
+# Building reference genome in directory where the genome files are
+
+	
+	 module load anaconda3
+	module avail conda
+
+	conda config --add channels defaults
+	conda config --add channels bioconda
+	conda config --add channels conda-forge
+
+	conda install RSEM
