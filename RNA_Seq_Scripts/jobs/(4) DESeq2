@@ -76,7 +76,8 @@ write.csv(counts, "counts_matrix.csv", quote = FALSE, row.names = FALSE)
 # 4) Create DESeq2 dataset and run analysis
 # ------------------------------
 # Convert the condition column to a factor so R understands it as categorical
-samples$condition <- factor(samples$condition)
+metadata$condition <- factor(metadata$condition)
+str(metadata$condition)
 
 # Create DESeqDataSetFromMatrix:
 # countData: integer count matrix (rows = genes, columns = samples)
@@ -85,23 +86,22 @@ samples$condition <- factor(samples$condition)
 # ensure rownames(samples) match column names of counts or provide colData with rownames set.
 rownames(samples) <- samples$sample
 
-
 # Prepare numeric count matrix for DESeq2 (essentially removes the gene_id column for DESeq from the count matrix because it is not numerical )
 count_matrix <- counts[, -1]         # remove gene_id column
 rownames(count_matrix) <- counts$gene_id
 
 # Ensure metadata rownames match count columns
-rownames(samples) <- samples$sample
-samples$condition <- factor(samples$condition)
+rownames(metadata) <- metadata$sample
+metadata$condition <- factor(metadata$condition)
 
-# Verify match to ensure the column names of count matrix exactly match the row names of metadata
-all(colnames(count_matrix) == rownames(samples))  # should be TRUE
+# Verify match
+all(colnames(count_matrix) == rownames(metadata))  # should be TRUE
 
 # Create DESeq2 object
 library(DESeq2)
 dds <- DESeqDataSetFromMatrix(
     countData = count_matrix,
-    colData = samples,
+    colData = metadata,
     design = ~ condition
 )
 
@@ -113,8 +113,9 @@ dds <- DESeq(dds)
 # 5) Extract results
 # ------------------------------
 # results() extracts the differential expression results.
-# Here we want SY14 vs WT (log2FoldChange positive means SY14 has higher expression than WT)
+# Here we want WT vs SY14 (log2FoldChange positive means SY14 has higher expression than WT)
 res <- results(dds, contrast = c("condition","SY14","WT"))
+
 
 # Sort results by adjusted p-value (padj)
 res <- res[order(res$padj), ]
@@ -126,3 +127,5 @@ write.csv(as.data.frame(res), "DESeq_results_SY14_vs_WT.csv", quote = FALSE, row
 
 sig_final <- res[which(res$padj < 0.001 & abs(res$log2FoldChange) > 1), ]
 write.csv(sig_final, file = "sig_DESeq_results_SY14_vs_WT.csv", quote = FALSE, row.names = TRUE)
+
+
