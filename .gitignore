@@ -3,3 +3,8 @@
 logs/
 *.err
 *.out
+
+# HPC logs
+3D_Scripts/logs/
+*.err
+*.out
