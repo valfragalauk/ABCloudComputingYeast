@@ -1,3 +1,5 @@
+Differential expression analysis using DESeq2. This script performs differential gene expression analysis on RNA-seq data quantified with RSEM
+
 # ------------------------------
 # 1) Load required libraries
 # ------------------------------
@@ -8,15 +10,15 @@ library(biomaRt) #for gene annotation
 library(EnhancedVolcano) # for volcano plots
 
 # ------------------------------
-# 2) Create a metadata/dataframe of samples
+# 2) Create a metadata of samples
 # ------------------------------
 # This block constructs a small metadata table (sample names, corresponding files, and condition of the sample).
 # 'sample' should match the column names you want in the final count matrix.
 # 'file' should be the filenames of RSEM or other gene-level results files.
 # 'condition' is the experimental factor; convert to factor before DESeq2.
-
+# set working directory to where your genes.results files are
 samples <- data.frame(
-sample = c("BY4742_R1","BY4742_R2","BY4742_R3",
+sample = c("BY4272_R1","BY4272_R2","BY4272_R3",
              "SY14_R1","SY14_R2","SY14_R3"),
   file = c("BY4272_R1.genes.results","BY4272_R2.genes.results",
            "BY4272_R3.genes.results","SY14_R1.genes.results",
@@ -32,10 +34,11 @@ write.csv(samples, "metadata.csv", row.names = FALSE)
 # 3) Read gene.results files & build count matrix
 # ------------------------------
 # This function reads one file and extracts gene_id and expected_count columns.
-read_rsem <- function(file, sample_name){
-  df <- read.table(file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)   
 # read table: header = TRUE (first row column names), sep = "\t" for tab-delimited
 # keep only gene identifier and the expected_count column (RSEM output).
+
+read_rsem <- function(file, sample_name){
+  df <- read.table(file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)   
   df <- df[, c("gene_id", "expected_count")]
   # rename the expected_count column to the sample name
   colnames(df)[2] <- sample_name
@@ -43,7 +46,7 @@ read_rsem <- function(file, sample_name){
 }
 # Read the sample file list from the metadata CSV we just wrote 
 samples <- read.csv("metadata.csv", stringsAsFactors = FALSE)
-# Use mapply to read all files into a list of data.frames Loops through all files (using mapply)
+# mapply is used to iterate over all input files and read them into a list of data frames
 count_list <- mapply(
   FUN = read_rsem,
   file = samples$file,
@@ -64,11 +67,6 @@ counts[, -1] <- round(as.matrix(counts[, -1]))
 # reorder columns to match metadata order
 counts <- counts[, c("gene_id", samples$sample)]
 
-
-
-counts
-
-
 # Save the counts matrix to CSV for record-keeping
 write.csv(counts, "counts_matrix.csv", quote = FALSE, row.names = FALSE)
 
@@ -76,8 +74,10 @@ write.csv(counts, "counts_matrix.csv", quote = FALSE, row.names = FALSE)
 # 4) Create DESeq2 dataset and run analysis
 # ------------------------------
 # Convert the condition column to a factor so R understands it as categorical
+metadata <- samples 
+rownames(metadata) <- metadata$sample
 metadata$condition <- factor(metadata$condition)
-str(metadata$condition)
+str(metadata$condition) #shows the structure
 
 # Create DESeqDataSetFromMatrix:
 # countData: integer count matrix (rows = genes, columns = samples)
@@ -95,7 +95,7 @@ rownames(metadata) <- metadata$sample
 metadata$condition <- factor(metadata$condition)
 
 # Verify match
-all(colnames(count_matrix) == rownames(metadata))  # should be TRUE
+all(colnames(count_matrix) == rownames(metadata))  # should be TRUE as they all need to match
 
 # Create DESeq2 object
 library(DESeq2)
@@ -114,28 +114,27 @@ dds <- DESeq(dds)
 # ------------------------------
 # res() extracts the differential expression results.
 # Here we want WT vs SY14 (log2FoldChange positive means SY14 has higher expression than WT)
+# Get DESeq2 results: SY14 vs WT
+res <- results(dds, contrast = c("condition","SY14","WT"))
 
-res <- results(dds, contrast = c("condition","SY14","WT")) # this ensures SY14 is compared against WT rather than other way around 
-res
+# Sort by adjusted p-value (put NA padj at the bottom)
+res <- res[order(res$padj, na.last = TRUE), ]
 
-# Sort results by adjusted p-value (padj)
-res <- res[order(res$padj), ]
+# Convert to data frame and add gene_id column
+res_df <- as.data.frame(res)
+res_df$gene_id <- rownames(res_df)
 
-# saving the results 
-
-write.csv(as.data.frame(res), "DESeq_results_SY14_vs_WT.csv", quote = FALSE, row.names = TRUE)
 
 # adding the biotype column to filter protein coding genes
+
 library(rtracklayer)
-
 gtf <- import("GCF_000146045.2_R64_genomic.gtf")
-
 gtf_gene <- gtf[gtf$type == "gene"]
-
 annotated <- as.data.frame(mcols(gtf_gene))[, c("gene_id", "gene", "gene_biotype")]
 colnames(annotated) <- c("gene_id", "gene_name", "gene_biotype")
 table(annotated$gene_biotype)
-res_annotated <- merge(res_df, annot_df, by = "gene_id", all.x = TRUE)
+res_annotated <- merge(res_df, annotated, by = "gene_id", all.x = TRUE)
+
 
 # Saving the results with protein coding genes 
 
@@ -148,10 +147,6 @@ write.csv(res_annotated, "genes_with_biotype.csv", row.names = FALSE)
 sig_final <- res[which(res$padj < 0.001 & abs(res$log2FoldChange) > 1), ]
 nrow(sig_final)
 
-# saving all the significant genes
-
-write.csv(sig_final, file = "sig_DESeq_results_SY14_vs_WT.csv", quote = FALSE, row.names = TRUE)
-
 # adding the biotype column to filter protein coding significant genes
 
 sig_final_df <- as.data.frame(sig_final)
@@ -162,7 +157,6 @@ gtf_gene <- gtf[gtf$type == "gene"]
 annot_df <- as.data.frame(mcols(gtf_gene))[, c("gene_id", "gene", "gene_biotype")]
 colnames(annot_df) <- c("gene_id", "gene_name", "gene_biotype")
 annot_df <- as.data.frame(annot_df)
-
 sig_final_with_biotype <- base::merge (sig_final_df, annot_df, by = "gene_id", all.x = TRUE)
 
 
@@ -183,8 +177,4 @@ write.csv(sig_protein,file = "sig_DESeq_with_protein_coding.csv",quote = FALSE,r
 sig_protein$DEG[sig_protein$padj < 0.001 & sig_protein$log2FoldChange > 1]  <- "Up"
 sig_protein$DEG[sig_protein$padj < 0.001 & sig_protein$log2FoldChange < -1] <- "Down"
 
-# save
-
-
-
-
+# save if created
