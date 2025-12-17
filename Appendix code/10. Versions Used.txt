@@ -1,0 +1,5 @@
+Versions Used
+
+FastQC v0.12.1
+Bowtie2 v2.5.1
+Samtools v1.17

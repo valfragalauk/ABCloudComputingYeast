@@ -179,7 +179,7 @@ nrow(sig_protein)
 
 write.csv(sig_protein,file = "sig_DESeq_with_protein_coding.csv",quote = FALSE,row.names = FALSE)
 
-## this helps separate genes that are over and under expressed by adding a column 
+## optional this helps separate genes that are over and under expressed by adding a column 
 sig_protein$DEG[sig_protein$padj < 0.001 & sig_protein$log2FoldChange > 1]  <- "Up"
 sig_protein$DEG[sig_protein$padj < 0.001 & sig_protein$log2FoldChange < -1] <- "Down"
 
