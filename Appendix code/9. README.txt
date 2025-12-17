@@ -1,0 +1,8 @@
+3D Structuring order
+
+1. Download HiC files
+2. Quality control HiC files
+3. Genome Indexing for aligning HiC files
+4. Mapping HiC reads to reference genome
+5. HiC pairs
+
