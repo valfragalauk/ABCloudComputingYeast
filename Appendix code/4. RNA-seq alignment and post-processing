@@ -1,3 +1,6 @@
+# RNA-seq alignment and expression quantification
+# This SLURM script performs paired-end RNA-seq alignment and gene/transcript quantification using RSEM with Bowtie2.
+# The analysis is carried out for Saccharomyces cerevisiae samples (BY4272 and SY14), each with three biological replicates, using a pre-built yeast RSEM reference.
 
 #!/bin/bash -l
 #SBATCH --job-name=rnaseq_align_quant
@@ -19,20 +22,23 @@ module load bowtie2
 module load samtools
 
 # ---------------------------------------------------
-# Defining input/output paths
+# Run RSEM alignment + quantification
 # ---------------------------------------------------
-#rsem-calculate-expression \
+
+# Defining input/output paths
+# rsem-calculate-expression \
 #  --paired-end \          # indicates paired-end reads; expects READ1 and READ2 (1.fastq and 2.fastq)
 #  --bowtie2 \             # use Bowtie2 for alignment
 # -p 4 \                  # number of threads (should match --cpus-per-task)
-#  "$READ1 specify path to the fastq file 1\
-#  "$READ2 specify path to the fastq file 2 \
-#  "$RSEM_REF specify path to the reference genome\
- # $OUT_PREFIX =  BY4272_R1(example)
+# FASTQ read 1 (specify path to the fastq file 1)
+# FASTQ read 2 (specify path to the fastq file 2)
+# RSEM reference prefix (specify path to the reference genome directory)
+# Output prefix (sample name) =  BY4272_R1(example)
 
-# ---------------------------------------------------
-# Run RSEM alignment + quantification
-# ---------------------------------------------------
+
+# --------------
+# Replicate 1
+# --------------
 rsem-calculate-expression \
   --paired-end \
   --bowtie2 \
@@ -52,6 +58,10 @@ rsem-calculate-expression \
   /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
   SY14_R1
 
+# --------------
+# Replicate 2
+# --------------
+
 rsem-calculate-expression \
   --paired-end \
   --bowtie2 \
@@ -69,6 +79,10 @@ rsem-calculate-expression \
 /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_2/raw_fastq/SRR7059705_2.fastq \
   /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
 SY14_R2
+
+# --------------
+# Replicate 3
+# --------------
 
 rsem-calculate-expression \
   --paired-end \
@@ -89,7 +103,7 @@ rsem-calculate-expression \
 SY14_R3
 
 # ---------------------------------------------------
-#Outputs you should expect 
+# expected output files per sample
 # ---------------------------------------------------
 #OUT_PREFIX.transcript.bam
 #OUT_PREFIX.genes.results        
