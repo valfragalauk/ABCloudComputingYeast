@@ -1,1 +1,98 @@
 
+#!/bin/bash -l
+#SBATCH --job-name=rnaseq_align_quant
+#SBATCH --output=/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/final/logs/%x_%j.out
+#SBATCH --error=/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/final/logs/%x_%j.err
+#SBATCH --time=08:00:00
+#SBATCH --mem=32G
+#SBATCH --cpus-per-task=4
+#SBATCH -p msc_appbio
+
+# ------------------------------------------------------------------------------
+# Activate the environment and load the necessary modules 
+# ------------------------------------------------------------------------------
+#first make sure you have the modules with module avail function outside of slurm.
+
+module load anaconda3
+conda activate rsem_env
+module load bowtie2
+module load samtools
+
+# ---------------------------------------------------
+# Defining input/output paths
+# ---------------------------------------------------
+#rsem-calculate-expression \
+#  --paired-end \          # indicates paired-end reads; expects READ1 and READ2 (1.fastq and 2.fastq)
+#  --bowtie2 \             # use Bowtie2 for alignment
+# -p 4 \                  # number of threads (should match --cpus-per-task)
+#  "$READ1 specify path to the fastq file 1\
+#  "$READ2 specify path to the fastq file 2 \
+#  "$RSEM_REF specify path to the reference genome\
+ # $OUT_PREFIX =  BY4272_R1(example)
+
+# ---------------------------------------------------
+# Run RSEM alignment + quantification
+# ---------------------------------------------------
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R1_NEW/raw_fastq/SRR7059709_1.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R1_NEW/raw_fastq/SRR7059709_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+  BY4272_R1
+
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R1_NEW/raw_fastq/SRR7059704_1.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R1_NEW/raw_fastq/SRR7059704_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+  SY14_R1
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_2/raw_fastq/SRR7059706_1.fastq \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_2/raw_fastq/SRR7059706_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+BY4272_R2
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_2/raw_fastq/SRR7059705_1.fastq \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_2/raw_fastq/SRR7059705_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+SY14_R2
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_3/BY4272/fastq_raw/SRR7059707_1.fastq \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_3/BY4272/fastq_raw/SRR7059707_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+BY4272_R3
+
+rsem-calculate-expression \
+  --paired-end \
+  --bowtie2 \
+  -p 4 \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_3/SY14/fastq_raw/SRR7059708_1.fastq \
+/scratch/grp/msc_appbio/Group2_ABCC/RNAseq/R_3/SY14/fastq_raw/SRR7059708_2.fastq \
+  /scratch/grp/msc_appbio/Group2_ABCC/RNAseq/ref_genome/yeast_rsem \
+SY14_R3
+
+# ---------------------------------------------------
+#Outputs you should expect 
+# ---------------------------------------------------
+#OUT_PREFIX.transcript.bam
+#OUT_PREFIX.genes.results        
+#OUT_PREFIX.isoforms.results     
+#OUT_PREFIX.stat            
+#OUT_PREFIX.log     
