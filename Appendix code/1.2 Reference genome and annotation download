@@ -1,1 +1,33 @@
 
+# Download the reference genome and gene annotation files from NCBI using the provided GCF (GenBank assembly) accession number.
+# Assembly: GCF_000146045.2 (Saccharomyces cerevisiae S288C, R64)
+# This sequence corresponds to the S. cerevisiae S288C (R64) reference genome.
+
+# ------------------------------
+#  1) create direcotry
+# ------------------------------
+mkdir ref_genome
+ 
+# ------------------------------
+# 2) Download the genomic DNA sequence in FASTA format.
+# ------------------------------
+# File extension:  .fna.gz  → compressed FASTA file containing the reference genome sequence
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
+
+# ------------------------------
+# 3) Download the gene annotation in GTF format.
+# ------------------------------
+# File extension: .gtf.gz → compressed GTF file containing gene, transcript, exon coordinates
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.gtf.gz
+
+# ------------------------------
+# 4) Decompress downloaded files
+# ------------------------------
+gunzip *.gz
+
+# Uncompress all .gz files in the current directory.
+# Resulting files:
+#  GCF_000146045.2_R64_genomic.fna
+#  GCF_000146045.2_R64_genomic.gtf
