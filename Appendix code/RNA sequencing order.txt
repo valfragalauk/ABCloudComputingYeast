@@ -1,0 +1,8 @@
+
+RNA sequencing order
+
+1) Download raw sequencing data (FASTQ files)
+2) Quality control of raw reads
+3) Prepare the reference genome (one-time only)
+4) Align reads and quantify expression with RSEM
+5) Differential expression analysis with DESeq2 in R
