@@ -1,5 +1,13 @@
 The following describes the execution order of the pipeline used for each section of the paper.
 
+RNA sequencing order
+
+1. Download raw sequencing data (FASTQ files)
+2 Quality control of raw reads
+3. Prepare the reference genome (one-time only)
+4. Align reads and quantify expression with RSEM
+5. Differential expression analysis with DESeq2 in R
+
 3D Structuring order
 
 1. Download HiC files
@@ -7,5 +15,6 @@ The following describes the execution order of the pipeline used for each sectio
 3. Genome Indexing for aligning HiC files
 4. Mapping HiC reads to reference genome
 5. HiC pairs
+
 
 
