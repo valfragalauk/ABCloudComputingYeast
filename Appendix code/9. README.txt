@@ -8,6 +8,19 @@ RNA sequencing order
 4. Align reads and quantify expression with RSEM
 5. Differential expression analysis with DESeq2 in R
 
+Genome assembly order
+
+1. Download raw genome sequencing data
+2. Quality control of raw reads
+3. BY4742 genome assembly (dataset 1)
+4. BY4742 genome assembly (dataset 2)
+5. SY14 initial de novo genome assembly
+6. SY14 genome assembly rerun / recovery
+7. BWA indexing of SY14 assembly
+8. Read alignment to SY14 assembly (BWA-MEM)
+9. Genome polishing with Pilon (round 1)
+10. Genome polishing with Pilon (round 2)
+
 3D Structuring order
 
 1. Download HiC files
@@ -15,6 +28,7 @@ RNA sequencing order
 3. Genome Indexing for aligning HiC files
 4. Mapping HiC reads to reference genome
 5. HiC pairs
+
 
 
 
