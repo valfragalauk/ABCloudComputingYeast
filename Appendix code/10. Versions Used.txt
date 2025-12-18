@@ -1,9 +1,13 @@
 Versions Used
 
 SRA version used srapath: 3.0.3 ( 3.0.2 )
-fastqc/0.12.1-gcc-13.2.0
+Fastqc v0.12.1
 RSEM: v1.3.1
-bowtie2: 2.5.1
-Samtools: 1.17
-DESeq2: 1.50.2
-R: 4.5.2
+bowtie2: v2.5.1
+Samtools: v1.17 and v1.19
+Canu: v1.5
+BWA-MEM: v0.7.17
+Pilon: v1.24)
+DESeq2: v1.50.2
+R: v4.5.2
+
